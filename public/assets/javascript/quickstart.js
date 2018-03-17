@@ -1,3 +1,4 @@
+var database = firebase.database();
 
 var fs = require('fs');
 var readline = require('readline');
