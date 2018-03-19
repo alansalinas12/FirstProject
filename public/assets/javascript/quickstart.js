@@ -122,9 +122,16 @@ function listEvents(auth) {
         } else {
             console.log('Upcoming 10 events:');
             for (var i = 0; i < events.length; i++) {
+
                 var event = events[i];
-                var start = event.start.dateTime || event.start.date;
-                console.log('%s - %s', start, event.summary);
+
+                var newEvent = {
+                    event: event,
+                    start: event.start.dateTime || event.start.date,
+                    location: event.location
+                };
+
+                database.ref("events/").push(newEvent);
             }
         }
     });
