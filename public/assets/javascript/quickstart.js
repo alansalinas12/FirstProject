@@ -124,10 +124,17 @@ function listEvents(auth) {
             for (var i = 0; i < events.length; i++) {
 
                 var event = events[i];
+                /**Taking the ISO 8601 format provided by the calendar API and converting to UNIX for use with weather API */
+                var normalStart = event.start.dateTime;
+                var normalEnd = event.end.dateTime;
+
+                var eventStartUnix = moment(normalStart).format('x');
+                var eventEndUnix = moment(normalEnd).format('x');
 
                 var newEvent = {
                     event: event,
-                    start: event.start.dateTime || event.start.date,
+                    start: eventStartUnix,
+                    end: eventEndUnix,
                     location: event.location
                 };
 
