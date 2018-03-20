@@ -7,7 +7,7 @@ var googleMapsClient = require('@google/maps').createClient({
 var lat;
 var lng;
 
-database.ref("events/")
+database.ref('Users/' + auth + '/events/' + eventId)
     .on("child_added", function (snapshot) {
         var sv = snapshot.val();
         key = snapshot.key;
@@ -22,7 +22,8 @@ database.ref("events/")
                 var geolocation = response.json.results.geometry.location;
                 lat = geolocation.lat;
                 lng = geolocation.lng;
-                database.ref().update(lat, lng);
+
+                database.ref('Users/' + auth + '/events/' + eventId).update({lat: lat, lng: lng});
             }
         });
 

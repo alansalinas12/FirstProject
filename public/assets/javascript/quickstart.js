@@ -124,6 +124,7 @@ function listEvents(auth) {
             for (var i = 0; i < events.length; i++) {
 
                 var event = events[i];
+                eventId = event.id;
                 /**Taking the ISO 8601 format provided by the calendar API and converting to UNIX for use with weather API */
                 var normalStart = event.start.dateTime;
                 var normalEnd = event.end.dateTime;
@@ -131,15 +132,16 @@ function listEvents(auth) {
                 var eventStartUnix = moment(normalStart).format('x');
                 var eventEndUnix = moment(normalEnd).format('x');
 
-                var newEvent = {
+
+                database.ref('Users/' + auth + '/events/' + eventId).set({
                     event: event,
                     start: eventStartUnix,
                     end: eventEndUnix,
-                    location: event.location
-                };
-
-                database.ref("events/").push(newEvent);
-            }
+                    location: event.location,
+                    summary: event.summary,
+                    lat: 0,
+                    lng: 0
+                })};
         }
     });
 }
